@@ -1,5 +1,6 @@
 package com.bnc.price.tester.pricetester.web.controller;
 
+import com.bnc.price.tester.pricetester.properties.DateProperties;
 import com.bnc.price.tester.pricetester.web.entity.Price;
 import com.bnc.price.tester.pricetester.web.service.PriceService;
 import org.junit.jupiter.api.Test;
@@ -20,11 +21,18 @@ class PriceControllerUnitTests {
     @Mock
     PriceService priceService;
 
+    @Mock
+    DateProperties dateProperties;
+
     @InjectMocks
     PriceController priceController;
 
     @Test
     void test_Controller_returning_100_price() {
+        Mockito.when(dateProperties.getMinDate()).thenReturn(
+                LocalDateTime.of(1800, 1, 1, 0, 0, 0));
+        Mockito.when(dateProperties.getMaxDate()).thenReturn(
+                LocalDateTime.of(2500, 1, 1, 0, 0, 0));
         LocalDateTime now = LocalDateTime.now();
         Price price = new Price(1, 1L, now, now,
                 1L, 1, BigDecimal.valueOf(100), "EUR");
